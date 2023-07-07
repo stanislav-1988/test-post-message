@@ -11,18 +11,18 @@ import { useEffect } from "react";
 const  App = () => {
     useEffect(() => {
 		if (window.webkit) {
-			window.webkit.messageHandlers.rt.postMessage('load')
-		  window.addEventListener('unload', () => window.webkit.messageHandlers.oo.postMessage('unload'));
-		  window.addEventListener('resize', () => window.webkit.messageHandlers.lg.postMessage('resize'));
-		  window.addEventListener('popstate', () => window.webkit.messageHandlers.lg.postMessage('popstate'));
+			window.webkit.messageHandlers.pageDidLoad.postMessage('load')
+		  window.addEventListener('unload', () => window.webkit.messageHandlers.pageWillUnload.postMessage('unload'));
+		  window.addEventListener('resize', () => window.webkit.messageHandlers.pageResized.postMessage('resize'));
+		  window.addEventListener('popstate', () => window.webkit.messageHandlers.pageDidHistoryNavigation.postMessage('popstate'));
 		}  else {
 			console.log(777)
 		}
 	
 		return () => {
-		  window.removeEventListener('unload', () => window.webkit.messageHandlers.oo.postMessage('unload'));
-		  window.removeEventListener('resize', () => window.webkit.messageHandlers.lg.postMessage('resize'));
-		  window.removeEventListener('popstate', () => window.webkit.messageHandlers.lg.postMessage('popstate'));
+		  window.removeEventListener('unload', () => window.webkit.messageHandlers.pageWillUnload.postMessage('unload'));
+		  window.removeEventListener('resize', () => window.webkit.messageHandlers.pageResized.postMessage('resize'));
+		  window.removeEventListener('popstate', () => window.webkit.messageHandlers.pageDidHistoryNavigation.postMessage('popstate'));
 		} ;
 	  }, []);
 	  return (
