@@ -5,11 +5,11 @@ import Timer from './components/Timer';
 import People from './components/People';
 import logo from './logo.svg';
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 
 const  App = () => {
-    useEffect(() => {
+    useLayoutEffect(() => {
 		if (window.webkit) {
 		  window.addEventListener('load', () => window.webkit.messageHandlers.pageDidLoad.postMessage(JSON.stringify({'message' : 'load'})));
 		  window.addEventListener('unload', () => window.webkit.messageHandlers.pageWillUnload.postMessage(JSON.stringify({'message' : 'unload'})));
