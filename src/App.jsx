@@ -1,15 +1,15 @@
 import './App.css';
-import { Route, Routes, Link } from 'react-router-dom';
-import Title from './components/Title';
-import Timer from './components/Timer';
-import People from './components/People';
-import logo from './logo.svg';
 
-import { useEffect } from "react";
+import React, { useEffect } from 'react';
 
+import {
+  handlerPostMessagePopstate,
+  handlerPostMessageResize,
+  handlerPostMessageUnLoad,
+} from './HandlerPostMessage/HandlerPostMessage';
 
-const  App = () => {
-    useEffect(() => {
+const App = () => {
+  useEffect(() => {
     if (window.webkit) {
       window.webkit.messageHandlers.rt.postMessage('load');
       window.addEventListener('unload', handlerPostMessageUnLoad);
@@ -18,7 +18,6 @@ const  App = () => {
     }
 
     return () => {
-      // window.removeEventListener('load', handlerPostMessageLoad);
       window.removeEventListener('unload', handlerPostMessageUnLoad);
       window.removeEventListener('resize', handlerPostMessageResize);
       window.removeEventListener('popstate', handlerPostMessagePopstate);
