@@ -12,9 +12,6 @@ const  App = () => {
     useLayoutEffect(() => {
 		
 		if (window.webkit) {
-			if (window.webkit.messageHandlers.pageDidLoad) {
-			window.addEventListener('load', () => window.webkit.messageHandlers.pageDidLoad.postMessage(JSON.stringify({'message' : 'load'})));
-			}
 			if (window.webkit.messageHandlers.pageWillUnload) {
 		  window.addEventListener('unload', () => window.webkit.messageHandlers.pageWillUnload.postMessage(JSON.stringify({'message' : 'unload'})));
 			}
