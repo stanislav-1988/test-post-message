@@ -5,6 +5,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+if (window.webkit.messageHandlers.pageDidLoad) {
+			window.addEventListener('load', () => window.webkit.messageHandlers.pageDidLoad.postMessage(JSON.stringify({'message' : 'load'})));
+			}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter >
