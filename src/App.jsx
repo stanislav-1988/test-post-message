@@ -11,17 +11,17 @@ import { useEffect } from "react";
 const  App = () => {
     useEffect(() => {
 		if (window.webkit) {
-		  window.addEventListener('load', () => window.webkit.messageHandlers.rt.postMessage('load'));
-		  window.addEventListener('unload', () => window.webkit.messageHandlers.oo.postMessage('unload'));
-		  window.addEventListener('resize', () => window.webkit.messageHandlers.lg.postMessage('resize'));
-		  window.addEventListener('popstate', () => window.webkit.messageHandlers.lg.postMessage('popstate'));
+		  window.addEventListener('load', () => window.webkit.messageHandlers.pageDidLoad.postMessage(JSON.stringify({'message' : 'load'})));
+		  window.addEventListener('unload', () => window.webkit.messageHandlers.pageWillUnload.postMessage(JSON.stringify({'message' : 'unload'})));
+		  window.addEventListener('resize', () => window.webkit.messageHandlers.pageResized.postMessage(JSON.stringify({'message' : 'resize'})));
+		  window.addEventListener('popstate', () => window.webkit.messageHandlers.pageDidHistoryNavigation.postMessage(JSON.stringify({'message' : 'popstate'})));
 		}
 	
 		return () => {
-		  window.removeEventListener('load', () => window.webkit.messageHandlers.rt.postMessage('load'));
-		  window.removeEventListener('unload', () => window.webkit.messageHandlers.oo.postMessage('unload'));
-		  window.removeEventListener('resize', () => window.webkit.messageHandlers.lg.postMessage('resize'));
-		  window.removeEventListener('popstate', () => window.webkit.messageHandlers.lg.postMessage('popstate'));
+		  window.removeEventListener('load', () => window.webkit.messageHandlers.pageDidLoad.postMessage(JSON.stringify({'message' : 'load'})));
+		  window.removeEventListener('unload', () => window.webkit.messageHandlers.pageWillUnload.postMessage(JSON.stringify({'message' : 'unload'})));
+		  window.removeEventListener('resize', () => window.webkit.messageHandlers.pageResized.postMessage(JSON.stringify({'message' : 'resize'})));
+		  window.removeEventListener('popstate', () => window.webkit.messageHandlers.pageDidHistoryNavigation.postMessage(JSON.stringify({'message' : 'popstate'})));
 		};
 	  }, []);
 	  return (
