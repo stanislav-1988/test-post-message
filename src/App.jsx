@@ -5,25 +5,34 @@ import Timer from './components/Timer';
 import People from './components/People';
 import logo from './logo.svg';
 
-import { Component } from "react";
+import { useLayoutEffect } from "react";
 
 
-class App extends Component {
-    componentDidMount() {
+const  App = () => {
+    useLayoutEffect(() => {
+		
 		if (window.webkit) {
-		  window.addEventListener('load', () => window.webkit.messageHandlers.rt.postMessage('load'));
-		  window.addEventListener('unload', () => window.webkit.messageHandlers.oo.postMessage('unload'));
-		  window.addEventListener('resize', () => window.webkit.messageHandlers.lg.postMessage('resize'));
-		  window.addEventListener('popstate', () => window.webkit.messageHandlers.lg.postMessage('popstate'));
+			if (window.webkit.messageHandlers.pageDidLoad) {
+			window.addEventListener('load', () => window.webkit.messageHandlers.pageDidLoad.postMessage(JSON.stringify({'message' : 'load'})));
+			}
+			if (window.webkit.messageHandlers.pageWillUnload) {
+		  window.addEventListener('unload', () => window.webkit.messageHandlers.pageWillUnload.postMessage(JSON.stringify({'message' : 'unload'})));
+			}
+			if (window.webkit.messageHandlers.pageResized) {
+		  window.addEventListener('resize', () => window.webkit.messageHandlers.pageResized.postMessage(JSON.stringify({'message' : 'resize'})));
+			}
+			if (window.webkit.messageHandlers.pageDidHistoryNavigation) {
+		  window.addEventListener('popstate', () => window.webkit.messageHandlers.pageDidHistoryNavigation.postMessage(JSON.stringify({'message' : 'popstate'})));
+			}
 		}
-	}
-	componentWillUnmount() {
-		  window.removeEventListener('load', () => window.webkit.messageHandlers.rt.postMessage('load'));
-		  window.removeEventListener('unload', () => window.webkit.messageHandlers.oo.postMessage('unload'));
-		  window.removeEventListener('resize', () => window.webkit.messageHandlers.lg.postMessage('resize'));
-		  window.removeEventListener('popstate', () => window.webkit.messageHandlers.lg.postMessage('popstate'));
+	
+		return () => {
+		  window.removeEventListener('load', () => window.webkit.messageHandlers.pageDidLoad.postMessage(JSON.stringify({'message' : 'load'})));
+		  window.removeEventListener('unload', () => window.webkit.messageHandlers.pageWillUnload.postMessage(JSON.stringify({'message' : 'unload'})));
+		  window.removeEventListener('resize', () => window.webkit.messageHandlers.pageResized.postMessage(JSON.stringify({'message' : 'resize'})));
+		  window.removeEventListener('popstate', () => window.webkit.messageHandlers.pageDidHistoryNavigation.postMessage(JSON.stringify({'message' : 'popstate'})));
 		};
-	  render() {
+	  }, []);
 	  return (
 		<div>
 			<header className='header'>
@@ -39,8 +48,6 @@ class App extends Component {
 		</Routes>
 		</div>
 	  );
-	  }
 	}
 
 	export default App;
-
